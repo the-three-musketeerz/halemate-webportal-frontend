@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid' 
 import AppointmentCard from './AppointmentCard'
 
 const useStyles = makeStyles(theme => ({
@@ -21,7 +21,7 @@ export default function AppointmentCardsContainer (props) {
       container
       className={classes.root}
       direction='row'
-      justify='flex-start'
+      justify="space-evenly"
       alignItems='center'
     >
         {appointments.map(appointment => (

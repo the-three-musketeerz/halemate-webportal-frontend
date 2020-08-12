@@ -41,19 +41,6 @@ function App () {
     }
   ])
 
-  const doctorsDetail = [
-    {
-      name: 'Aryaman Behera',
-      specialization: ['surgeon', 'dentist', 'doctor1'],
-      timing: '11 - 12 PM'
-    },
-    {
-      name: 'Doctor no. 2',
-      specialization: ['surgeon', 'heart', 'doctor2'],
-      timing: '12 - 12 AM'
-    }
-  ]
-
   const fetchHospitalInfo = () => {
     axios
       .get(rootUrl + whoAmI, {

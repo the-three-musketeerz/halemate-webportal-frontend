@@ -1,5 +1,13 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import 'date-fns'
+import DateFnsUtils from '@date-io/date-fns'
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker
+} from '@material-ui/pickers'
+import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardContent from '@material-ui/core/CardContent'
@@ -13,7 +21,6 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import axios from 'axios'
 import { rootUrl, appointmentAPI } from '../config/config'
-
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 345
@@ -57,7 +64,9 @@ export default function AppointmentCard (props) {
   const statusStyles = useInputStyles()
   const appointment = props.iter
   const appointment_created_at = time2date(appointment.appointment_made_time)
-
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date(appointment.appointment_time)
+  )
   const [status, setStatus] = React.useState(appointment.status)
 
   const handleStatusChange = event => {
@@ -67,6 +76,23 @@ export default function AppointmentCard (props) {
         `${rootUrl}${appointmentAPI}${appointment.id}/`,
         {
           status: event.target.value
+        },
+        {
+          headers: {
+            Authorization: `Token ${props.token}`
+          }
+        }
+      )
+      .catch(err => console.error(err))
+  }
+
+  const handleTimeChange = date => {
+    setSelectedDate(date)
+    axios
+      .patch(
+        `${rootUrl}${appointmentAPI}${appointment.id}/`,
+        {
+          appointment_time: date
         },
         {
           headers: {
@@ -109,6 +135,31 @@ export default function AppointmentCard (props) {
             <MenuItem value={'A'}>Approved</MenuItem>
           </Select>
         </FormControl>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid container justify='space-around'>
+            <KeyboardDatePicker
+              margin='normal'
+              id='date-picker-dialog'
+              label='Date picker dialog'
+              format='MM/dd/yyyy'
+              value={selectedDate}
+              onChange={handleTimeChange}
+              KeyboardButtonProps={{
+                'aria-label': 'change date'
+              }}
+            />
+            <KeyboardTimePicker
+              margin='normal'
+              id='time-picker'
+              label='Time picker'
+              value={selectedDate}
+              onChange={handleTimeChange}
+              KeyboardButtonProps={{
+                'aria-label': 'change time'
+              }}
+            />
+          </Grid>
+        </MuiPickersUtilsProvider>
       </CardActions>
     </Card>
   )
