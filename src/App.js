@@ -5,6 +5,8 @@ import { whoAmI, appointmentAPI, rootUrl } from './config/config'
 import Container from '@material-ui/core/Container'
 import AppointmentCardsContainer from './components/AppointmentCardsContainer'
 import DoctorsAvailable from './components/DoctorList'
+import CreateAppointmentForm from './components/CreateAppointment'
+
 function App () {
   const [isLoggedIn, toogleLogin] = React.useState(false)
   const [notification, setNotification] = React.useState(10)
@@ -12,7 +14,7 @@ function App () {
     '48b652b491668f44fd9c3330d185a23e00139439aa35c0ca867037b982857f41'
   )
   const [hospitalName, setHospitalName] = React.useState(null)
-
+  const [hospitalId, setHospitalId] = React.useState(null)
   const [appointments, setAppointments] = React.useState([
     {
       appointment_made_time: null,
@@ -53,6 +55,7 @@ function App () {
         console.log(res.data[0])
         setDoctors(res.data[0].doctors)
         setHospitalName(res.data[0].name)
+        setHospitalId(res.data[0].id)
       })
   }
 
@@ -88,6 +91,7 @@ function App () {
         />
       </Container>
       <DoctorsAvailable list={doctors} />
+      <CreateAppointmentForm doctors={doctors} token={token} hospitalId={hospitalId}/>
     </div>
   )
 }

@@ -13,6 +13,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import Slide from '@material-ui/core/Slide'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -42,6 +43,10 @@ const useStyles = makeStyles({
   }
 })
 
+const Transition = React.forwardRef(function Transition (props, ref) {
+  return <Slide direction='down' ref={ref} {...props} />
+})
+
 function SimpleDialog (props) {
   const classes = useStyles()
   const { onClose, selectedValue, open } = props
@@ -53,7 +58,12 @@ function SimpleDialog (props) {
   const doctorsDetail = props.list
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog
+      onClose={handleClose}
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+    >
       <DialogTitle id='doctors-list' align='center'>
         Available doctors in the Hospital
       </DialogTitle>
