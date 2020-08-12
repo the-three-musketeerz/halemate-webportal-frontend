@@ -162,6 +162,9 @@ export default function NavBar (props) {
             {props.serverName}
           </Typography>
           <div className={classes.grow} />
+          <Typography className={classes.title} variant='h6' noWrap>
+            {props.clientHospital}
+          </Typography>
           <div className={classes.sectionDesktop}>
             <IconButton color='inherit'>
               <Badge badgeContent={props.notifCount + 2} color='secondary'>
