@@ -25,7 +25,7 @@ function App () {
       },
       hospital: null,
       id: null,
-      patient_name: null,
+      patient_name: "Patient",
       reason: null,
       status: null,
       user: null
@@ -59,7 +59,8 @@ function App () {
       })
   }
 
-  const fetchHospitalAppointments = () => {
+  const fetchHospitalAppointments = (dummy) => {
+    console.log("fetch hospital called", dummy)
     axios
       .get(rootUrl + appointmentAPI, {
         headers: {
@@ -67,7 +68,6 @@ function App () {
         }
       })
       .then(res => {
-        console.log(res.data)
         setAppointments(res.data)
       })
   }
@@ -91,7 +91,12 @@ function App () {
         />
       </Container>
       <DoctorsAvailable list={doctors} />
-      <CreateAppointmentForm doctors={doctors} token={token} hospitalId={hospitalId}/>
+        <CreateAppointmentForm
+          doctors={doctors}
+          token={token}
+          hospitalId={hospitalId}
+          appointmentCallback = {fetchHospitalAppointments}
+        />
     </div>
   )
 }

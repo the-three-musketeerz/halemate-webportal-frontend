@@ -23,7 +23,8 @@ import axios from 'axios'
 import { rootUrl, appointmentAPI } from '../config/config'
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 345
+    maxWidth: 345,
+    borderRadius: 20
   },
   media: {
     height: 0,
@@ -47,6 +48,10 @@ const useStyles = makeStyles(theme => ({
 const time2date = date => {
   let d = new Date(date)
   return d.toDateString()
+}
+
+const firstLetter = name => {
+  return name.charAt(0)
 }
 
 const useInputStyles = makeStyles(theme => ({
@@ -103,12 +108,14 @@ export default function AppointmentCard (props) {
       .catch(err => console.error(err))
   }
 
+  const nameLetter = firstLetter(appointment.patient_name)
+
   return (
-    <Card className={classes.root} key={appointment.id}>
+    <Card className={classes.root} key={appointment.id} variant="outlined">
       <CardHeader
         avatar={
           <Avatar aria-label='recipe' className={classes.avatar}>
-            R
+            {}
           </Avatar>
         }
         title={appointment.patient_name}

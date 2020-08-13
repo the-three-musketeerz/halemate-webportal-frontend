@@ -89,6 +89,7 @@ export default function CreateAppointmentForm (props) {
         }
       }
     )
+    props.appointmentCallback("from create")
     setPatientName(null)
     setDoctor(null)
     setReason(null)
@@ -100,7 +101,7 @@ export default function CreateAppointmentForm (props) {
   return (
     <div>
       <Button onClick={handleClickOpen}>
-        <Fab color='primary' aria-label='add'>
+        <Fab color='primary' aria-label='add' size="large">
           <AddIcon />
         </Fab>
       </Button>
