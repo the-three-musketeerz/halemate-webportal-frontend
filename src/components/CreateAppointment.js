@@ -55,14 +55,16 @@ export default function CreateAppointmentForm (props) {
   const [patientName, setPatientName] = React.useState(null)
   const [doctor, setDoctor] = React.useState(null)
   const [reason, setReason] = React.useState(null)
-  const [selectedDate, setSelectedDate] = React.useState()
+  const [selectedDate, setSelectedDate] = React.useState(
+      new Date("2017-05-24T10:30Z")
+  )
 
   const handleTimeChange = date => {
     setSelectedDate(date)
   }
 
   const handleDoctor = event => {
-      setDoctor(event.target.value)
+    setDoctor(event.target.value)
   }
 
   const handleReason = event => {
@@ -83,13 +85,9 @@ export default function CreateAppointmentForm (props) {
         appointment_time: selectedDate,
         hospital: props.hospitalId
       },
-      {
-        headers: {
-          Authorization: `Token ${props.token}`
-        }
-      }
-    )
-    props.appointmentCallback("from create")
+    ).then(() => {
+        props.appointmentCallback()
+    })
     setPatientName(null)
     setDoctor(null)
     setReason(null)
@@ -101,7 +99,7 @@ export default function CreateAppointmentForm (props) {
   return (
     <div>
       <Button onClick={handleClickOpen}>
-        <Fab color='primary' aria-label='add' size="large">
+        <Fab color='primary' aria-label='add' size='large'>
           <AddIcon />
         </Fab>
       </Button>

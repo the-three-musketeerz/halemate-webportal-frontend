@@ -28,7 +28,7 @@ export default function AppointmentCardsContainer (props) {
     >
       {appointments.map(appointment => (
         <Grid item >
-          <AppointmentCard iter={appointment} token={props.token} />
+          <AppointmentCard iter={appointment} />
         </Grid>
       ))}
     </Grid>

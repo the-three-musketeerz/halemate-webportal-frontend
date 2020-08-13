@@ -5,6 +5,12 @@ import { webSocket, webSocketUrl } from '../config/config'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
+import Poppers from '@material-ui/core/Popper'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import Paper from '@material-ui/core/Paper'
+import Grow from '@material-ui/core/Grow'
+import MenuList from '@material-ui/core/MenuList'
+import CloseIcon from '@material-ui/icons/Close'
 import Badge from '@material-ui/core/Badge'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
@@ -74,18 +80,40 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function NavBar (props) {
+  const [notifCount, setNotifCount] = React.useState(10)
+
+  const [notifications, setNotifications] = React.useState([])
+  const [openNotification, setOpenNotification] = React.useState(null)
+
+  const handleClickNotification = event => {
+    if (openNotification && openNotification.contains(event.target)) {
+      setOpenNotification(null)
+    } else {
+      setOpenNotification(event.currentTarget)
+    }
+  }
+
+  const handleCloseNotification = () => {
+    setOpenNotification(null)
+  }
 
   React.useEffect(() => {
     const ws = new WebSocket(`${webSocketUrl}${webSocket}${props.token}`)
-  
+
     ws.onopen = event => {
       console.log(event)
     }
 
     ws.onmessage = event => {
-      console.log(JSON.parse(event.data))
+      const data = JSON.parse(event.data)
+      setNotifCount(notifCount => notifCount + 1)
+      setOpenNotification()
+      console.log(data)
+      if (data.type == 200) {
+        setNotifications(notifications => notifications.push(data))
+        console.log(notifications)
+      }
     }
-
   }, [])
 
   const classes = useStyles()
@@ -116,10 +144,10 @@ export default function NavBar (props) {
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -127,6 +155,8 @@ export default function NavBar (props) {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   )
+
+  const notifRef = React.useRef(null)
 
   const mobileMenuId = 'primary-search-account-menu-mobile'
   const renderMobileMenu = (
@@ -141,7 +171,7 @@ export default function NavBar (props) {
     >
       <MenuItem>
         <IconButton aria-label='show new notifications' color='inherit'>
-          <Badge badgeContent={props.notifCount} color='secondary'>
+          <Badge badgeContent={notifCount} color='secondary'>
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -181,11 +211,59 @@ export default function NavBar (props) {
             {props.clientHospital}
           </Typography>
           <div className={classes.sectionDesktop}>
-            <IconButton color='inherit'>
-              <Badge badgeContent={props.notifCount + 2} color='secondary'>
+            <IconButton
+              color='inherit'
+              aria-owns={
+                openNotification ? 'notification-menu-list-grow' : null
+              }
+              aria-haspopup='true'
+              onClick={handleClickNotification}
+            >
+              <Badge badgeContent={notifCount + 2} color='secondary'>
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            <Poppers
+              open={Boolean(openNotification)}
+              anchorEl={openNotification}
+              transition
+              disablePortal
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center'
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  id='notification-menu-list-grow'
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleCloseNotification}>
+                      <MenuList role='menu'>
+                        {notifications.map((notif) => (
+                          <MenuItem onClick={handleCloseNotification}>
+                          {notif.message}
+                        </MenuItem>
+                        ))}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Poppers>
             <IconButton
               edge='end'
               aria-label='account of current user'

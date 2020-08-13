@@ -24,6 +24,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import axios from 'axios'
 import { rootUrl, appointmentAPI } from '../config/config'
+
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 345,
@@ -85,11 +86,6 @@ export default function AppointmentCard (props) {
         `${rootUrl}${appointmentAPI}${appointment.id}/`,
         {
           status: event.target.value
-        },
-        {
-          headers: {
-            Authorization: `Token ${props.token}`
-          }
         }
       )
       .catch(err => console.error(err))
@@ -98,11 +94,7 @@ export default function AppointmentCard (props) {
   React.useEffect(() => {
     return () => {
       axios
-        .delete(`${rootUrl}${appointmentAPI}${appointment.id}/`, {
-          headers: {
-            Authorization: `Token ${props.token}`
-          }
-        })
+        .delete(`${rootUrl}${appointmentAPI}${appointment.id}/`)
         .catch(err => console.error(err))
     }
   }, [isRendered])
@@ -118,17 +110,10 @@ export default function AppointmentCard (props) {
         `${rootUrl}${appointmentAPI}${appointment.id}/`,
         {
           appointment_time: date
-        },
-        {
-          headers: {
-            Authorization: `Token ${props.token}`
-          }
         }
       )
       .catch(err => console.error(err))
   }
-
-  const nameLetter = firstLetter(appointment.patient_name)
 
   return (
     <Collapse in={isRendered} unmountOnExit>
@@ -160,7 +145,7 @@ export default function AppointmentCard (props) {
             <Select
               labelId='demo-simple-select-label'
               id='demo-simple-select'
-              defaultValue={status}
+              defaultValue={appointment.status}
               onChange={handleStatusChange}
             >
               <MenuItem value={'P'}>Pending</MenuItem>

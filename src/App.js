@@ -9,9 +9,7 @@ import CreateAppointmentForm from './components/CreateAppointment'
 
 function App () {
 
-  
   const [isLoggedIn, toogleLogin] = React.useState(false)
-  const [notifCount, setNotifCount] = React.useState(10)
   const [token, setToken] = React.useState(
     '48b652b491668f44fd9c3330d185a23e00139439aa35c0ca867037b982857f41'
     )
@@ -48,34 +46,29 @@ function App () {
 
   const fetchHospitalInfo = () => {
     axios
-      .get(rootUrl + whoAmI, {
-        headers: {
-          Authorization: `Token ${token}`
-        }
-      })
+      .get(rootUrl + whoAmI)
       .then(res => {
         // console.log(res.data[0].hospital_appointments)
-        console.log(res.data[0])
+        //console.log(res.data[0])
         setDoctors(res.data[0].doctors)
         setHospitalName(res.data[0].name)
         setHospitalId(res.data[0].id)
       })
   }
 
-  const fetchHospitalAppointments = (dummy) => {
-    console.log("fetch hospital called", dummy)
+  const fetchHospitalAppointments = () => {
+    console.log("fetched appointments")
     axios
-      .get(rootUrl + appointmentAPI, {
-        headers: {
-          Authorization: `Token ${token}`
-        }
-      })
+      .get(rootUrl + appointmentAPI)
       .then(res => {
+        console.log(res.data)
         setAppointments(res.data)
       })
+      .catch(err => console.error(err))
   }
 
   React.useEffect(() => {
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`
     fetchHospitalInfo()
     fetchHospitalAppointments()
   }, [])
@@ -85,21 +78,18 @@ function App () {
       <NavBar
         clientHospital={hospitalName}
         serverName='HaleMate portal'
-        notifCount={notifCount}
         token={token}
       />
       <Container>
         <AppointmentCardsContainer
           appointmentList={appointments}
-          token={token}
         />
       </Container>
       <DoctorsAvailable list={doctors} />
         <CreateAppointmentForm
           doctors={doctors}
-          token={token}
           hospitalId={hospitalId}
-          appointmentCallback = {fetchHospitalAppointments}
+          appointmentCallback={fetchHospitalAppointments}
         />
     </div>
   )
