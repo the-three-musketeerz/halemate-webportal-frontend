@@ -11,8 +11,14 @@ Authorization: Token <redacted>
 */
 const APPOINTMENT = '/halemate/appointment/'
 
+//Websocket for new appointments and alerts
+const WEB_SOCKET_URL = 'ws://localhost:8000'
+const WEB_SOCKET = '/ws/halemate/'
+
 module.exports = {
   rootUrl: ROOT_URL,
   whoAmI: WHO_AM_I,
-  appointmentAPI: APPOINTMENT
+  appointmentAPI: APPOINTMENT,
+  webSocket: WEB_SOCKET,
+  webSocketUrl: WEB_SOCKET_URL
 }

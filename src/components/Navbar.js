@@ -1,6 +1,7 @@
 import React from 'react'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
+import { webSocket, webSocketUrl } from '../config/config'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
@@ -73,6 +74,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function NavBar (props) {
+
+  React.useEffect(() => {
+    const ws = new WebSocket(`${webSocketUrl}${webSocket}${props.token}`)
+  
+    ws.onopen = event => {
+      console.log(event)
+    }
+
+    ws.onmessage = event => {
+      console.log(JSON.parse(event.data))
+    }
+
+  }, [])
+
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)

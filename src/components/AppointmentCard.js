@@ -7,6 +7,9 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker
 } from '@material-ui/pickers'
+import Collapse from '@material-ui/core/Collapse'
+import CloseIcon from '@material-ui/icons/Close'
+import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -65,6 +68,7 @@ const useInputStyles = makeStyles(theme => ({
 }))
 
 export default function AppointmentCard (props) {
+  const [isRendered, setRenderStatus] = React.useState(true)
   const classes = useStyles()
   const statusStyles = useInputStyles()
   const appointment = props.iter
@@ -91,6 +95,22 @@ export default function AppointmentCard (props) {
       .catch(err => console.error(err))
   }
 
+  React.useEffect(() => {
+    return () => {
+      axios
+        .delete(`${rootUrl}${appointmentAPI}${appointment.id}/`, {
+          headers: {
+            Authorization: `Token ${props.token}`
+          }
+        })
+        .catch(err => console.error(err))
+    }
+  }, [isRendered])
+
+  const handleDeleteAppointment = () => {
+    setRenderStatus(false)
+  }
+
   const handleTimeChange = date => {
     setSelectedDate(date)
     axios
@@ -111,63 +131,70 @@ export default function AppointmentCard (props) {
   const nameLetter = firstLetter(appointment.patient_name)
 
   return (
-    <Card className={classes.root} key={appointment.id} variant="outlined">
-      <CardHeader
-        avatar={
-          <Avatar aria-label='recipe' className={classes.avatar}>
-            {}
-          </Avatar>
-        }
-        title={appointment.patient_name}
-      />
-      <CardContent>
-        <Typography variant='body2' color='textSecondary' component='p'>
-          Appointment Created at: {appointment_created_at}
-        </Typography>
-        <Typography variant='body2' color='textSecondary' component='p'>
-          Doctor: {appointment.doctor.name}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <FormControl className={statusStyles.formControl}>
-          <InputLabel id='demo-simple-select-label'>Status</InputLabel>
-          <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            defaultValue={status}
-            onChange={handleStatusChange}
-          >
-            <MenuItem value={'P'}>Pending</MenuItem>
-            <MenuItem value={'R'}>Rejected</MenuItem>
-            <MenuItem value={'A'}>Approved</MenuItem>
-          </Select>
-        </FormControl>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Grid container justify='space-around'>
-            <KeyboardDatePicker
-              margin='normal'
-              id='date-picker-dialog'
-              label='Date picker dialog'
-              format='MM/dd/yyyy'
-              value={selectedDate}
-              onChange={handleTimeChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change date'
-              }}
-            />
-            <KeyboardTimePicker
-              margin='normal'
-              id='time-picker'
-              label='Time picker'
-              value={selectedDate}
-              onChange={handleTimeChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change time'
-              }}
-            />
-          </Grid>
-        </MuiPickersUtilsProvider>
-      </CardActions>
-    </Card>
+    <Collapse in={isRendered} unmountOnExit>
+      <Card className={classes.root} key={appointment.id} variant='outlined'>
+        <CardHeader
+          avatar={
+            <Avatar aria-label='recipe' className={classes.avatar}>
+              {}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label='settings' onClick={handleDeleteAppointment}>
+              <CloseIcon />
+            </IconButton>
+          }
+          title={appointment.patient_name}
+        />
+        <CardContent>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            Appointment Created at: {appointment_created_at}
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            Doctor: {appointment.doctor.name}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <FormControl className={statusStyles.formControl}>
+            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              defaultValue={status}
+              onChange={handleStatusChange}
+            >
+              <MenuItem value={'P'}>Pending</MenuItem>
+              <MenuItem value={'R'}>Rejected</MenuItem>
+              <MenuItem value={'A'}>Approved</MenuItem>
+            </Select>
+          </FormControl>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container justify='space-around'>
+              <KeyboardDatePicker
+                margin='normal'
+                id='date-picker-dialog'
+                label='Date picker dialog'
+                format='MM/dd/yyyy'
+                value={selectedDate}
+                onChange={handleTimeChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date'
+                }}
+              />
+              <KeyboardTimePicker
+                margin='normal'
+                id='time-picker'
+                label='Time picker'
+                value={selectedDate}
+                onChange={handleTimeChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change time'
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
+        </CardActions>
+      </Card>
+    </Collapse>
   )
 }

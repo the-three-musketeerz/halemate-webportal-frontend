@@ -1,18 +1,21 @@
 import React from 'react'
 import NavBar from './components/Navbar'
 import axios from 'axios'
-import { whoAmI, appointmentAPI, rootUrl } from './config/config'
+import { whoAmI, appointmentAPI, rootUrl, webSocket, webSocketUrl } from './config/config'
 import Container from '@material-ui/core/Container'
 import AppointmentCardsContainer from './components/AppointmentCardsContainer'
 import DoctorsAvailable from './components/DoctorList'
 import CreateAppointmentForm from './components/CreateAppointment'
 
 function App () {
+
+  
   const [isLoggedIn, toogleLogin] = React.useState(false)
-  const [notification, setNotification] = React.useState(10)
+  const [notifCount, setNotifCount] = React.useState(10)
   const [token, setToken] = React.useState(
     '48b652b491668f44fd9c3330d185a23e00139439aa35c0ca867037b982857f41'
-  )
+    )
+  
   const [hospitalName, setHospitalName] = React.useState(null)
   const [hospitalId, setHospitalId] = React.useState(null)
   const [appointments, setAppointments] = React.useState([
@@ -82,7 +85,8 @@ function App () {
       <NavBar
         clientHospital={hospitalName}
         serverName='HaleMate portal'
-        notifCount={notification}
+        notifCount={notifCount}
+        token={token}
       />
       <Container>
         <AppointmentCardsContainer
