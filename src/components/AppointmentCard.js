@@ -82,36 +82,35 @@ export default function AppointmentCard (props) {
   const handleStatusChange = event => {
     setStatus(event.target.value)
     axios
-      .patch(
-        `${rootUrl}${appointmentAPI}${appointment.id}/`,
-        {
-          status: event.target.value
-        }
-      )
+      .patch(`${rootUrl}${appointmentAPI}${appointment.id}/`, {
+        status: event.target.value
+      })
       .catch(err => console.error(err))
   }
 
-  React.useEffect(() => {
-    return () => {
-      axios
-        .delete(`${rootUrl}${appointmentAPI}${appointment.id}/`)
-        .catch(err => console.error(err))
-    }
-  }, [isRendered])
+  // React.useEffect(() => {
+  //   return () => {
+  //     axios
+  //       .delete(`${rootUrl}${appointmentAPI}${appointment.id}/`)
+  //       .catch(err => console.error(err))
+  //   }
+  // }, [isRendered])
 
   const handleDeleteAppointment = () => {
-    setRenderStatus(false)
+    axios
+      .delete(`${rootUrl}${appointmentAPI}${appointment.id}/`)
+      .then(() => {
+        setRenderStatus(false)
+      })
+      .catch(err => console.error(err))
   }
 
   const handleTimeChange = date => {
     setSelectedDate(date)
     axios
-      .patch(
-        `${rootUrl}${appointmentAPI}${appointment.id}/`,
-        {
-          appointment_time: date
-        }
-      )
+      .patch(`${rootUrl}${appointmentAPI}${appointment.id}/`, {
+        appointment_time: date
+      })
       .catch(err => console.error(err))
   }
 

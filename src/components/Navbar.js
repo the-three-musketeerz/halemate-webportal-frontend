@@ -82,7 +82,13 @@ const useStyles = makeStyles(theme => ({
 export default function NavBar (props) {
   const [notifCount, setNotifCount] = React.useState(10)
 
-  const [notifications, setNotifications] = React.useState([])
+  const [notifications, setNotifications] = React.useState([
+    {
+      type: null,
+      message: null,
+      appointment_id: null
+    }
+  ])
   const [openNotification, setOpenNotification] = React.useState(null)
 
   const handleClickNotification = event => {
@@ -253,10 +259,10 @@ export default function NavBar (props) {
                   <Paper>
                     <ClickAwayListener onClickAway={handleCloseNotification}>
                       <MenuList role='menu'>
-                        {notifications.map((notif) => (
+                        {notifications.map(notif => (
                           <MenuItem onClick={handleCloseNotification}>
-                          {notif.message}
-                        </MenuItem>
+                            {notif.message}
+                          </MenuItem>
                         ))}
                       </MenuList>
                     </ClickAwayListener>
