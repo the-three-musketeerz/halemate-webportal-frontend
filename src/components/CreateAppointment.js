@@ -98,7 +98,7 @@ export default function CreateAppointmentForm (props) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
+      <Button onClick={handleClickOpen} zIndex="tooltip">
         <Fab color='primary' aria-label='add' size='large'>
           <AddIcon />
         </Fab>

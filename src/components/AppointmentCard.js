@@ -28,7 +28,8 @@ import { rootUrl, appointmentAPI } from '../config/config'
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 345,
-    borderRadius: 20
+    borderRadius: 20,
+    boxShadow: 30
   },
   media: {
     height: 0,
@@ -108,7 +109,7 @@ export default function AppointmentCard (props) {
 
   return (
     <Collapse in={isRendered} unmountOnExit>
-      <Card className={classes.root} key={appointment.id} variant='outlined'>
+      <Card className={classes.root} key={appointment.id} variant='elevation'>
         <CardHeader
           avatar={
             <Avatar aria-label='recipe' className={classes.avatar}>
