@@ -118,6 +118,7 @@ export default function CreateAppointmentForm (props) {
             id='name'
             label='Patient Name'
             type='name'
+            value={patientName}
             onChange={handlePatientName}
             fullWidth
           />
@@ -127,6 +128,7 @@ export default function CreateAppointmentForm (props) {
             id='reason'
             label='Reason'
             type='name'
+            value={reason}
             onChange={handleReason}
             fullWidth
           />

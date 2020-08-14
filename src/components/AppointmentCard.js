@@ -88,14 +88,6 @@ export default function AppointmentCard (props) {
       .catch(err => console.error(err))
   }
 
-  // React.useEffect(() => {
-  //   return () => {
-  //     axios
-  //       .delete(`${rootUrl}${appointmentAPI}${appointment.id}/`)
-  //       .catch(err => console.error(err))
-  //   }
-  // }, [isRendered])
-
   const handleDeleteAppointment = () => {
     axios
       .delete(`${rootUrl}${appointmentAPI}${appointment.id}/`)
