@@ -9,6 +9,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MoreIcon from '@material-ui/icons/MoreVert'
+import { rootUrl, logoutUrl } from '../config/config'
+import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -72,10 +75,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function NavBar (props) {
-
-  
-
-
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
@@ -96,6 +95,18 @@ export default function NavBar (props) {
     handleMobileMenuClose()
   }
 
+  const handleLogout = () => {
+    console.log("Logged out")
+    axios
+      .post(rootUrl + logoutUrl)
+      .then(res => {
+        if (res.status === 204) {
+          localStorage.setItem('token', null)
+          return <Redirect to='/' />
+        }
+      })
+      .catch(err => console.log(err))
+  }
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget)
   }
@@ -111,7 +122,7 @@ export default function NavBar (props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   )
@@ -171,7 +182,7 @@ export default function NavBar (props) {
             {props.clientHospital}
           </Typography>
           <div className={classes.sectionDesktop}>
-            <NotifIcon token={props.token}/>
+            <NotifIcon token={props.token} />
             <IconButton
               edge='end'
               aria-label='account of current user'

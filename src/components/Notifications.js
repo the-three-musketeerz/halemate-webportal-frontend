@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import { webSocket, webSocketUrl } from '../config/config'
 import MenuItem from '@material-ui/core/MenuItem'
-import Sound from 'react-sound'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -103,8 +102,6 @@ export default function NotifIcon (props) {
           <NotificationsIcon />
         </Badge>
       </IconButton>
-      <Sound url={notifSoundUrl} />
-      {/* <audio src={notifSoundUrl} autoPlay /> */}
       <Popover
         id={id}
         open={open}
