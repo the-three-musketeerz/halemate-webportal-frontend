@@ -9,6 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import { rootUrl, registerUrl, loginUrl } from '../config/config'
+import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -22,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: '100%', 
+    width: '100%',
     marginTop: theme.spacing(3)
   },
   submit: {
@@ -31,6 +33,31 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Register () {
+  const [email, setEmail] = React.useState(null)
+  const [password, setPassword] = React.useState(null)
+  const [name, setName] = React.useState(null)
+  const [phoneNumber, setPhoneNumber] = React.useState(null)
+
+  const handleSignup = event => {
+    event.preventDefault()
+    console.log('Signing up as Hospital')
+    axios
+      .post(rootUrl + registerUrl, {
+        email: email,
+        password: password,
+        name: name,
+        phoneNumber: phoneNumber,
+        registered_as: 'H'
+      })
+      .then(res => {
+        if (res.status === 200) {
+          console.log('Successfully signed up!')
+          window.location = window.location.origin + loginUrl
+        }
+      })
+      .catch(err => console.log(err))
+  }
+
   const classes = useStyles()
 
   return (
@@ -41,31 +68,21 @@ export default function Register () {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Sign up
+          Sign up for Halemate-portal
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSignup}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete='fname'
                 name='firstName'
                 variant='outlined'
                 required
                 fullWidth
+                onChange={event => setName(event.target.value)}
                 id='firstName'
                 label='First Name'
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                id='lastName'
-                label='Last Name'
-                name='lastName'
-                autoComplete='lname'
               />
             </Grid>
             <Grid item xs={12}>
@@ -73,6 +90,7 @@ export default function Register () {
                 variant='outlined'
                 required
                 fullWidth
+                onChange={event => setEmail(event.target.value)}
                 id='email'
                 label='Email Address'
                 name='email'
@@ -84,6 +102,19 @@ export default function Register () {
                 variant='outlined'
                 required
                 fullWidth
+                onChange={event => setPhoneNumber(event.target.value)}
+                id='phoneNumber'
+                label='Phone Number'
+                name='phoneNumber'
+                autoComplete='phoneNumber'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                onChange={event => setPassword(event.target.value)}
                 name='password'
                 label='Password'
                 type='password'

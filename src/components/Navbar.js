@@ -11,7 +11,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { rootUrl, logoutUrl } from '../config/config'
 import axios from 'axios'
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -96,13 +96,16 @@ export default function NavBar (props) {
   }
 
   const handleLogout = () => {
-    console.log("Logged out")
+    
     axios
       .post(rootUrl + logoutUrl)
       .then(res => {
         if (res.status === 204) {
-          localStorage.setItem('token', null)
-          return <Redirect to='/' />
+          console.log("Logged out")
+          localStorage.removeItem('token')
+          // return <Redirect to='/' />
+          window.location = window.location.origin
+
         }
       })
       .catch(err => console.log(err))
@@ -201,6 +204,7 @@ export default function NavBar (props) {
               aria-haspopup='true'
               onClick={handleMobileMenuOpen}
               color='inherit'
+              type='submit'
             >
               <MoreIcon />
             </IconButton>

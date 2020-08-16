@@ -17,7 +17,7 @@ const WEB_SOCKET = '/ws/halemate/'
 
 //Login, logout and register API endpoint for POST request 
 const LOGIN_URL =  '/halemate/login/'
-const REGISTER_URL = '/halemate/register/'
+const REGISTER_URL = '/halemate/signup/'
 const LOGOUT_URL = '/halemate/logout/'
 
 module.exports = {

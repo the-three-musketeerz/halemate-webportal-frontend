@@ -49,11 +49,23 @@ export default function Login () {
         if (res.status == 200) {
           console.log(res.data)
           localStorage.setItem('token', res.data.token)
-          return <Redirect to={{pathname: '/'}}/>
+          console.log('REdirecting to main portal')
+          //   return <Redirect to='/'/>
+          window.location = window.location.origin
         }
       })
       .catch(err => console.log(err))
   }
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('token')
+    console.log(token)
+    if (token) {
+      console.log('Already logged in!')
+      // return <Redirect to='/'/>
+      window.location = window.location.origin
+    }
+  }, [])
 
   return (
     <Container component='main' maxWidth='xs'>

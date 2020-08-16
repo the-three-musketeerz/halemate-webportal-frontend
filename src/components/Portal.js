@@ -65,7 +65,7 @@ function Portal () {
 
   React.useEffect(() => {
     console.log("Token" ,token)
-    if(localStorage.getItem('token') == null){
+    if(token == null){
       console.log("Redirecting to login")
       return (
       <Redirect to={{pathname: '/login'}}/>
