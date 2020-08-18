@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/static/js/main.6bec6953.chunk.js",
-    "main.js.map": "/static/js/main.6bec6953.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.5d746247.js",
-    "runtime-main.js.map": "/static/js/runtime-main.5d746247.js.map",
-    "static/js/2.8805315d.chunk.js": "/static/js/2.8805315d.chunk.js",
-    "static/js/2.8805315d.chunk.js.map": "/static/js/2.8805315d.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.762081227552f1f6415129eb9946601d.js": "/precache-manifest.762081227552f1f6415129eb9946601d.js",
-    "service-worker.js": "/service-worker.js",
-    "static/js/2.8805315d.chunk.js.LICENSE.txt": "/static/js/2.8805315d.chunk.js.LICENSE.txt"
+    "main.js": "/halemate-webportal-frontend/static/js/main.6bec6953.chunk.js",
+    "main.js.map": "/halemate-webportal-frontend/static/js/main.6bec6953.chunk.js.map",
+    "runtime-main.js": "/halemate-webportal-frontend/static/js/runtime-main.79c7a29e.js",
+    "runtime-main.js.map": "/halemate-webportal-frontend/static/js/runtime-main.79c7a29e.js.map",
+    "static/js/2.8805315d.chunk.js": "/halemate-webportal-frontend/static/js/2.8805315d.chunk.js",
+    "static/js/2.8805315d.chunk.js.map": "/halemate-webportal-frontend/static/js/2.8805315d.chunk.js.map",
+    "index.html": "/halemate-webportal-frontend/index.html",
+    "precache-manifest.c3da51d81e4931a5a7fcd1d4b2d0a6f8.js": "/halemate-webportal-frontend/precache-manifest.c3da51d81e4931a5a7fcd1d4b2d0a6f8.js",
+    "service-worker.js": "/halemate-webportal-frontend/service-worker.js",
+    "static/js/2.8805315d.chunk.js.LICENSE.txt": "/halemate-webportal-frontend/static/js/2.8805315d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.5d746247.js",
+    "static/js/runtime-main.79c7a29e.js",
     "static/js/2.8805315d.chunk.js",
     "static/js/main.6bec6953.chunk.js"
   ]
