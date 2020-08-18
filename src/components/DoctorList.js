@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Dialog from '@material-ui/core/Dialog'
 import Chip from '@material-ui/core/Chip'
@@ -14,6 +13,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import Slide from '@material-ui/core/Slide'
+import { Fab } from '@material-ui/core'
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -115,11 +115,20 @@ export default function DoctorsAvailable (props) {
     setOpen(false)
   }
 
+  const fabStyle = {
+    margin: 0,
+    top: 'auto',
+    right: 'auto',
+    bottom: 40,
+    left: 40,
+    position: 'fixed',
+};
+
   return (
     <div>
-      <Button variant='contained' color='primary' onClick={handleClickOpen}>
+      <Fab variant='extended' color='primary' onClick={handleClickOpen} style={fabStyle}>
         Doctors Available
-      </Button>
+      </Fab>
       <SimpleDialog open={open} onClose={handleClose} list={props.list} />
     </div>
   )

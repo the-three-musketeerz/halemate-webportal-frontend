@@ -11,7 +11,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import axios from 'axios'
 import { rootUrl, loginUrl } from '../config/config'
-import { Redirect } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -46,7 +45,7 @@ export default function Login () {
         password: password
       })
       .then(res => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           console.log(res.data)
           localStorage.setItem('token', res.data.token)
           console.log('REdirecting to main portal')

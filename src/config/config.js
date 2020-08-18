@@ -1,4 +1,7 @@
-const ROOT_URL = 'http://localhost:8000'
+const BACKEND_PORT = '8000'
+const HOST_URI = 'halemate-backend.southeastasia.cloudapp.azure.com'
+const ROOT_URL = `http://${HOST_URI}:${BACKEND_PORT}`
+
 
 /*GET request for fetching every resource associated with the hospital 
 except appointments for security reasons
@@ -12,7 +15,7 @@ Authorization: Token <redacted>
 const APPOINTMENT = '/halemate/appointment/'
 
 //Websocket for new appointments and alerts
-const WEB_SOCKET_URL = 'ws://localhost:8000'
+const WEB_SOCKET_URL = `ws://${HOST_URI}:${BACKEND_PORT}`
 const WEB_SOCKET = '/ws/halemate/'
 
 //Login, logout and register API endpoint for POST request 

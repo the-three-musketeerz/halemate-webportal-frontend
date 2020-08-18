@@ -11,7 +11,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { rootUrl, logoutUrl } from '../config/config'
 import axios from 'axios'
-import { Redirect } from 'react-router'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -130,7 +129,6 @@ export default function NavBar (props) {
     </Menu>
   )
 
-  const notifRef = React.useRef(null)
 
   const mobileMenuId = 'primary-search-account-menu-mobile'
   const renderMobileMenu = (

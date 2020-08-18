@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function AppointmentCardsContainer (props) {
-  const [spacing, setSpacing] = React.useState(2)
   const classes = useStyles()
   const appointments = props.appointmentList
   return (

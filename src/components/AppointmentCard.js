@@ -55,10 +55,6 @@ const time2date = date => {
   return d.toDateString()
 }
 
-const firstLetter = name => {
-  return name.charAt(0)
-}
-
 const useInputStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -109,7 +105,7 @@ export default function AppointmentCard (props) {
 
   return (
     <Collapse in={isRendered} unmountOnExit>
-      <Card className={classes.root} key={appointment.id} variant='elevation'>
+      <Card className={classes.root} key={appointment.id} variant='outlined'>
         <CardHeader
           avatar={
             <Avatar aria-label='recipe' className={classes.avatar}>
@@ -129,6 +125,9 @@ export default function AppointmentCard (props) {
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
             Doctor: {appointment.doctor.name}
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            Appointment Reason: {appointment.reason}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -150,7 +149,7 @@ export default function AppointmentCard (props) {
               <KeyboardDatePicker
                 margin='normal'
                 id='date-picker-dialog'
-                label='Date picker dialog'
+                label='Appointment Date'
                 format='MM/dd/yyyy'
                 value={selectedDate}
                 onChange={handleTimeChange}
@@ -161,7 +160,7 @@ export default function AppointmentCard (props) {
               <KeyboardTimePicker
                 margin='normal'
                 id='time-picker'
-                label='Time picker'
+                label='Appointment Timing'
                 value={selectedDate}
                 onChange={handleTimeChange}
                 KeyboardButtonProps={{

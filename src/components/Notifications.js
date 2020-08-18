@@ -1,5 +1,4 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import Popover from '@material-ui/core/Popover'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import Badge from '@material-ui/core/Badge'
@@ -15,17 +14,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Slide from '@material-ui/core/Slide'
 
-const Transition = React.forwardRef(function Transition (props, ref) {
-  return <Slide direction='up' ref={ref} {...props} />
-})
-
-const notifSoundUrl = '../assets/audio/swiftly.mp3'
-
-const useStyles = makeStyles(theme => ({
-  typography: {
-    padding: theme.spacing(2)
-  }
-}))
+// const notifSoundUrl = '../assets/audio/swiftly.mp3'
 
 export default function NotifIcon (props) {
   const [isAlertOpen, setAlertOpen] = React.useState(false)
@@ -42,6 +31,9 @@ export default function NotifIcon (props) {
   const [notifications, setNotifications] = React.useState([])
 
   const [alert, setAlerts] = React.useState([])
+  const [lat, setLat] = React.useState(null)
+  const [lng, setLng] = React.useState(null)
+  const [patientLocation, setPatientLocation] = React.useState(null)
 
   React.useEffect(() => {
     const ws = new WebSocket(`${webSocketUrl}${webSocket}${props.token}`)
@@ -66,11 +58,19 @@ export default function NotifIcon (props) {
         setAlertOpen(true)
         let obj = {}
         obj['type'] = 'emergencyAlert - 505'
-        obj['message'] = 'Medical Emergency Alert nearby'
+        obj['message'] = 'Medical Emergency Alert'
         obj['patient_contact'] = data.patient_contact
         obj['patient_name'] = data.patient_name
-        obj['patient_location'] = data.location
+        obj['patient_lat'] = data.lat
+        obj['patient_lng'] = data.lng
+
         setAlerts(alert => alert.concat(obj))
+
+        setLat(data.lat)
+        setLng(data.lng)
+        setPatientLocation(
+          `https://maps.google.com/maps?q=${data.lat},${data.lng}&hl=es;z=14&amp;output=embed;key=AIzaSyAqOazqPcP8E-_s-Vp7MRbP3UMUgS2xfQw`
+        )
       }
     }
   }, [])
@@ -82,6 +82,11 @@ export default function NotifIcon (props) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  React.useEffect(() => {
+    console.log(alert[0])
+    console.log(patientLocation)
+  }, [alert, patientLocation])
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
@@ -133,18 +138,29 @@ export default function NotifIcon (props) {
         <DialogContent>
           <DialogContentText id='alert-dialog-slide-description'>
             {'Details'}
-            <Typography>{alert.name}</Typography>
-            <Typography>{alert.patient_contact}</Typography>
-            <Typography>{alert.patient_name}</Typography>
+            <Typography>{JSON.stringify(alert)}</Typography>
+            <Typography>
+              <a target='_blank' href={patientLocation}>
+                Exact location in Google Maps :{' '}
+              </a>
+            </Typography>
           </DialogContentText>
-          {/* <iframe src='https://maps.google.com/maps?q=15.236740,74.617067&hl=es;z=14&amp;output=embed'></iframe> */}
+          <iframe
+            width='300'
+            height='170'
+            frameborder='0'
+            scrolling='no'
+            marginheight='0'
+            marginwidth='0'
+            src={patientLocation}
+          ></iframe>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAlertClose} color='primary'>
-            Disagree
+            Close
           </Button>
           <Button onClick={handleAlertClose} color='primary'>
-            Agree
+            Take action
           </Button>
         </DialogActions>
       </Dialog>

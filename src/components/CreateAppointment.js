@@ -36,7 +36,10 @@ const useStyles = makeStyles(theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
-  }
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
 }))
 
 export default function CreateAppointmentForm (props) {
@@ -96,11 +99,21 @@ export default function CreateAppointmentForm (props) {
     handleClose()
   }
 
+  const fabStyle = {
+    margin: 0,
+    top: 'auto',
+    right: 40,
+    bottom: 40,
+    left: 'auto',
+    position: 'fixed',
+};
+
   return (
     <div>
       <Button onClick={handleClickOpen} zIndex="tooltip">
-        <Fab color='primary' aria-label='add' size='large'>
-          <AddIcon />
+        <Fab color='primary' aria-label='add' size='large' style={fabStyle} variant='extended'>
+          <AddIcon className={classes.extendedIcon} />
+        Create Appointment
         </Fab>
       </Button>
       <Dialog
