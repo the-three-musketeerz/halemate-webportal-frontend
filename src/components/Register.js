@@ -52,7 +52,7 @@ export default function Register () {
       .then(res => {
         if (res.status === 200) {
           console.log('Successfully signed up!')
-          window.location = window.location.origin + loginUrl
+          window.location = window.location.origin + 'login/'
         }
       })
       .catch(err => console.log(err))
