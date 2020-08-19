@@ -36,6 +36,7 @@ export default function NotifIcon (props) {
   const [lat, setLat] = React.useState(null)
   const [lng, setLng] = React.useState(null)
   const [patientLocation, setPatientLocation] = React.useState(null)
+  const [patientLocationGoogleMaps, setPatientLocationGoogleMaps] = React.useState(null)
 
   React.useEffect(() => {
     const ws = new WebSocket(`${webSocketUrl}${webSocket}${props.token}`)
@@ -72,6 +73,9 @@ export default function NotifIcon (props) {
         setLat(data.lat)
         setLng(data.lng)
         setPatientLocation(
+          `https://www.google.com/maps/embed/v1/place?q=${data.lat},${data.lng}&key=AIzaSyAVn6ea2iJcMq9Wp0pKGlr3RpA8SVK1MCM`
+        )
+        setPatientLocationGoogleMaps(
           `https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=${lat},${lng}&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed`
         )
       }
@@ -143,7 +147,7 @@ export default function NotifIcon (props) {
             {'Details'}
             <Typography>{JSON.stringify(alert)}</Typography>
             <Typography>
-              <a target='_blank' href={patientLocation}>
+              <a target='_blank' href={patientLocationGoogleMaps}>
                 Exact location in Google Maps :{' '}
               </a>
             </Typography>
