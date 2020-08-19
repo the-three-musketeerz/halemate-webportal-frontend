@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import 'date-fns'
@@ -72,7 +74,7 @@ export default function AppointmentCard (props) {
   const appointment = props.iter
   const appointment_created_at = time2date(appointment.appointment_made_time)
   const [selectedDate, setSelectedDate] = React.useState(
-    new Date(appointment.appointment_time)
+    Date.now()
   )
   const [status, setStatus] = React.useState(appointment.status)
 

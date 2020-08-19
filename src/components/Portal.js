@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import React from 'react'
 import NavBar from './Navbar'
 import axios from 'axios'

@@ -9,7 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import { rootUrl, registerUrl, loginUrl } from '../config/config'
+import { rootUrl, registerUrl} from '../config/config'
 import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
@@ -52,7 +52,7 @@ export default function Register () {
       .then(res => {
         if (res.status === 200) {
           console.log('Successfully signed up!')
-          window.location = window.location.origin + 'login/'
+          window.location = window.location.origin + '/login/'
         }
       })
       .catch(err => console.log(err))
@@ -81,7 +81,7 @@ export default function Register () {
                 fullWidth
                 onChange={event => setName(event.target.value)}
                 id='firstName'
-                label='First Name'
+                label='Hospital Name'
                 autoFocus
               />
             </Grid>

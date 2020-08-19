@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import React from 'react'
 import Popover from '@material-ui/core/Popover'
 import NotificationsIcon from '@material-ui/icons/Notifications'
@@ -69,7 +71,7 @@ export default function NotifIcon (props) {
         setLat(data.lat)
         setLng(data.lng)
         setPatientLocation(
-          `https://maps.google.com/maps?q=${data.lat},${data.lng}&hl=es;z=14&amp;output=embed;key=AIzaSyAqOazqPcP8E-_s-Vp7MRbP3UMUgS2xfQw`
+          `https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=${lat},${lng}&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed`
         )
       }
     }
@@ -146,8 +148,8 @@ export default function NotifIcon (props) {
             </Typography>
           </DialogContentText>
           <iframe
-            width='300'
-            height='170'
+            width='100%'
+            height='600'
             frameborder='0'
             scrolling='no'
             marginheight='0'
