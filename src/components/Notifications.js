@@ -15,13 +15,16 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Slide from '@material-ui/core/Slide'
+import Collapse from '@material-ui/core/Collapse'
 
 // const notifSoundUrl = '../assets/audio/swiftly.mp3'
 
 export default function NotifIcon (props) {
   const [isAlertOpen, setAlertOpen] = React.useState(false)
+  const [isRendered, setRenderStatus] = React.useState(true)
 
   const handleAlertClose = () => {
+    setRenderStatus(false)
     setAlertOpen(false)
   }
 
@@ -36,7 +39,10 @@ export default function NotifIcon (props) {
   const [lat, setLat] = React.useState(null)
   const [lng, setLng] = React.useState(null)
   const [patientLocation, setPatientLocation] = React.useState(null)
-  const [patientLocationGoogleMaps, setPatientLocationGoogleMaps] = React.useState(null)
+  const [
+    patientLocationGoogleMaps,
+    setPatientLocationGoogleMaps
+  ] = React.useState(null)
 
   React.useEffect(() => {
     const ws = new WebSocket(`${webSocketUrl}${webSocket}${props.token}`)
@@ -132,45 +138,47 @@ export default function NotifIcon (props) {
           <MenuItem>{notification.message}</MenuItem>
         ))}
       </Popover>
-      <Dialog
-        open={isAlertOpen}
-        TransitionComponent={Transition}
-        onClose={handleAlertClose}
-        aria-labelledby='alert-dialog-slide-title'
-        aria-describedby='alert-dialog-slide-description'
-      >
-        <DialogTitle id='alert-dialog-slide-title'>
-          {'Medical Emergency'}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-slide-description'>
-            {'Details'}
-            <Typography>{JSON.stringify(alert)}</Typography>
-            <Typography>
-              <a target='_blank' href={patientLocationGoogleMaps}>
-                Exact location in Google Maps :{' '}
-              </a>
-            </Typography>
-          </DialogContentText>
-          <iframe
-            width='100%'
-            height='600'
-            frameborder='0'
-            scrolling='no'
-            marginheight='0'
-            marginwidth='0'
-            src={patientLocation}
-          ></iframe>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleAlertClose} color='primary'>
-            Close
-          </Button>
-          <Button onClick={handleAlertClose} color='primary'>
-            Take action
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Collapse in={isAlertOpen} unmountOnExit>
+        <Dialog
+          open={isAlertOpen}
+          TransitionComponent={Transition}
+          onClose={handleAlertClose}
+          aria-labelledby='alert-dialog-slide-title'
+          aria-describedby='alert-dialog-slide-description'
+        >
+          <DialogTitle id='alert-dialog-slide-title'>
+            {'Medical Emergency'}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id='alert-dialog-slide-description'>
+              {'Details'}
+              <Typography>{JSON.stringify(alert)}</Typography>
+              <Typography>
+                <a target='_blank' href={patientLocationGoogleMaps}>
+                  Exact location in Google Maps :{' '}
+                </a>
+              </Typography>
+            </DialogContentText>
+            <iframe
+              width='100%'
+              height='600'
+              frameborder='0'
+              scrolling='no'
+              marginheight='0'
+              marginwidth='0'
+              src={patientLocation}
+            ></iframe>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleAlertClose} color='primary'>
+              Close
+            </Button>
+            <Button onClick={handleAlertClose} color='primary'>
+              Take action
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Collapse>
     </div>
   )
 }
