@@ -183,7 +183,7 @@ export default function NavBar (props) {
             {props.clientHospital}
           </Typography>
           <div className={classes.sectionDesktop}>
-            <NotifIcon token={props.token} />
+            <NotifIcon token={props.token} appointmentCallback={props.appointmentCallback} />
             <IconButton
               edge='end'
               aria-label='account of current user'

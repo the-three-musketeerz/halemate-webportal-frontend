@@ -90,7 +90,8 @@ export default function AppointmentCard (props) {
   const handleDeleteAppointment = () => {
     axios
       .delete(`${rootUrl}${appointmentAPI}${appointment.id}/`)
-      .then(() => {
+      .then((res) => {
+        console.log(res)
         setRenderStatus(false)
       })
       .catch(err => console.error(err))
@@ -152,7 +153,7 @@ export default function AppointmentCard (props) {
                 margin='normal'
                 id='date-picker-dialog'
                 label='Appointment Date'
-                format='MM/dd/yyyy'
+                format='dd/MM/yyyy'
                 value={selectedDate}
                 onChange={handleTimeChange}
                 KeyboardButtonProps={{

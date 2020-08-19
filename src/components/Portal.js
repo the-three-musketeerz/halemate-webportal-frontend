@@ -84,6 +84,7 @@ function Portal () {
         clientHospital={hospitalName}
         serverName='HaleMate portal'
         token={token}
+        appointmentCallback={fetchHospitalAppointments}
       />
       <Container>
         <AppointmentCardsContainer

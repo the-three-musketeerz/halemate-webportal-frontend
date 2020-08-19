@@ -55,6 +55,7 @@ export default function NotifIcon (props) {
         obj['message'] = 'You got a new appointment!'
         obj['appointment_id'] = data.appointment_id
         setNotifications(notifications => notifications.concat(obj))
+        props.appointmentCallback()
       } else {
         notifRef.current.click()
         setAlertOpen(true)
